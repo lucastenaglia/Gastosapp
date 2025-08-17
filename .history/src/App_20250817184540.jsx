@@ -3,7 +3,6 @@ import Header from './components/Header'
 import ExpenseForm from './components/ExpenseForm'
 import ExpenseList from './components/ExpenseList'
 import ExpenseSummary from './components/ExpenseSummary'
-import ExpenseStats from './components/ExpenseStats'
 import Login from './components/Login'
 import HouseholdSetup from './components/HouseholdSetup'
 import { 
@@ -426,7 +425,7 @@ function App() {
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
               >
                 <span>+</span>
-                <span>Gasto</span>
+                <span>Agregar Gasto</span>
               </button>
               <button
                 onClick={() => setIsStatsOpen(true)}
@@ -487,14 +486,6 @@ function App() {
           onReturnToHousehold={handleReturnToHousehold}
           hasExistingHousehold={!!household}
           onInviteUser={handleInviteUser}
-        />
-      )}
-
-      {isStatsOpen && (
-        <ExpenseStats
-          expenses={expenses}
-          onClose={() => setIsStatsOpen(false)}
-          isOpen={isStatsOpen}
         />
       )}
     </div>

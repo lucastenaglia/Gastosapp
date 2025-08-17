@@ -10,9 +10,6 @@ const ExpenseForm = ({ onSubmit, onClose, currentUser, household, householdMembe
     date: new Date().toISOString().split('T')[0]
   })
 
-  // Verificar si estamos en modo hogar
-  const isHouseholdMode = !!household && householdMembers.length > 0
-
   const categories = [
     { value: 'comida', label: '🍽️ Comida' },
     { value: 'super', label: '🛒 Super' },
@@ -161,28 +158,9 @@ const ExpenseForm = ({ onSubmit, onClose, currentUser, household, householdMembe
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Usuario
               </label>
-              {isHouseholdMode ? (
-                <select
-                  name="person"
-                  value={formData.person}
-                  onChange={handleChange}
-                  className="input-field"
-                >
-                  {householdMembers.map(member => {
-                    const firstName = member.user?.name?.split(' ')[0] || 'Usuario'
-                    const value = member.user?.name?.toLowerCase() || 'usuario'
-                    return (
-                      <option key={member.user_id} value={value}>
-                        👤 {firstName}
-                      </option>
-                    )
-                  })}
-                </select>
-              ) : (
-                <div className="input-field bg-gray-50 text-gray-700 cursor-not-allowed">
-                  👤 {currentUser?.name || 'Usuario'}
-                </div>
-              )}
+              <div className="input-field bg-gray-50 text-gray-700 cursor-not-allowed">
+                👤 {currentUser?.name || 'Usuario'}
+              </div>
               <input
                 type="hidden"
                 name="person"

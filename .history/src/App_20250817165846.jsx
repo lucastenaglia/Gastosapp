@@ -3,7 +3,6 @@ import Header from './components/Header'
 import ExpenseForm from './components/ExpenseForm'
 import ExpenseList from './components/ExpenseList'
 import ExpenseSummary from './components/ExpenseSummary'
-import ExpenseStats from './components/ExpenseStats'
 import Login from './components/Login'
 import HouseholdSetup from './components/HouseholdSetup'
 import { 
@@ -24,7 +23,6 @@ function App() {
   const [expenses, setExpenses] = useState([])
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isHouseholdSetupOpen, setIsHouseholdSetupOpen] = useState(false)
-  const [isStatsOpen, setIsStatsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [user, setUser] = useState(null)
@@ -426,14 +424,7 @@ function App() {
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
               >
                 <span>+</span>
-                <span>Gasto</span>
-              </button>
-              <button
-                onClick={() => setIsStatsOpen(true)}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
-              >
-                <span>📊</span>
-                <span>Estadísticas</span>
+                <span>Agregar Gasto</span>
               </button>
             </div>
           </div>
@@ -447,11 +438,7 @@ function App() {
             <div className="space-y-6">
               {/* Resumen de gastos - arriba */}
               <div>
-                <ExpenseSummary 
-                  expenses={expenses} 
-                  isPersonal={!household} 
-                  householdMembers={household?.household?.members || []}
-                />
+                <ExpenseSummary expenses={expenses} isPersonal={!household} />
               </div>
               
               {/* Lista de gastos - abajo */}
@@ -473,8 +460,6 @@ function App() {
           onSubmit={handleAddExpense}
           onClose={() => setIsFormOpen(false)}
           currentUser={user}
-          household={household}
-          householdMembers={household?.household?.members || []}
         />
       )}
 
@@ -487,14 +472,6 @@ function App() {
           onReturnToHousehold={handleReturnToHousehold}
           hasExistingHousehold={!!household}
           onInviteUser={handleInviteUser}
-        />
-      )}
-
-      {isStatsOpen && (
-        <ExpenseStats
-          expenses={expenses}
-          onClose={() => setIsStatsOpen(false)}
-          isOpen={isStatsOpen}
         />
       )}
     </div>

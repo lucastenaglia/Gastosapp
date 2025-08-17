@@ -39,26 +39,8 @@ const Login = ({ onLogin }) => {
       if (result && result.success && result.user && result.user.id) {
         console.log('🔐 Login - Usuario válido, guardando en localStorage...')
         console.log('🔐 Login - Usuario a guardar:', result.user)
-        
-        if (isRegistering) {
-          // Si es registro, mostrar mensaje de éxito primero
-          setError('Cuenta creada!')
-          // Limpiar el formulario
-          setName('')
-          setEmail('')
-          setPassword('')
-          // Cambiar a modo login
-          setIsRegistering(false)
-          // Hacer login automático después de un breve delay
-          setTimeout(() => {
-            localStorage.setItem('user', JSON.stringify(result.user))
-            onLogin(result.user)
-          }, 1500)
-        } else {
-          // Si es login, proceder normalmente
-          localStorage.setItem('user', JSON.stringify(result.user))
-          onLogin(result.user)
-        }
+        localStorage.setItem('user', JSON.stringify(result.user))
+        onLogin(result.user)
       } else {
         console.error('❌ Login - Usuario inválido o sin id')
         console.error('❌ Login - Resultado recibido:', result)
@@ -94,7 +76,7 @@ const Login = ({ onLogin }) => {
               </h1>
               {error && (
                 <div className={`mt-2 p-3 rounded text-sm ${
-                  error === 'Cuenta creada!' || error.includes('exitosamente')
+                  error.includes('exitosamente') 
                     ? 'bg-green-100 border border-green-400 text-green-700' 
                     : 'bg-red-100 border border-red-400 text-red-700'
                 }`}>
@@ -184,6 +166,16 @@ const Login = ({ onLogin }) => {
             >
               {isRegistering ? 'Iniciar Sesión' : 'Crear Cuenta'}
             </button>
+          </div>
+
+          {/* Información de credenciales de ejemplo */}
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 className="text-sm font-medium text-blue-800 mb-2">Credenciales de ejemplo:</h3>
+            <div className="text-xs text-blue-700 space-y-1">
+              <p><strong>Email:</strong> lucas@example.com</p>
+              <p><strong>Password:</strong> 123456</p>
+              <p><strong>O:</strong> aldi@example.com / 123456</p>
+            </div>
           </div>
 
         </div>

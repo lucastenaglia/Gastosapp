@@ -186,6 +186,16 @@ const Login = ({ onLogin }) => {
             </button>
           </div>
 
+          {/* Información de credenciales de ejemplo */}
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 className="text-sm font-medium text-blue-800 mb-2">Credenciales de ejemplo:</h3>
+            <div className="text-xs text-blue-700 space-y-1">
+              <p><strong>Email:</strong> lucas@example.com</p>
+              <p><strong>Password:</strong> 123456</p>
+              <p><strong>O:</strong> aldi@example.com / 123456</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

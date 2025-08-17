@@ -128,6 +128,13 @@ export const createUser = async (name, email, password) => {
       return { success: false, error: message }
     }
     
+    // También agregar a la lista local para compatibilidad
+    // AUTH_CONFIG.USERS.push({
+    //   email,
+    //   password,
+    //   name
+    // })
+    
     return {
       success: true,
       user: {
