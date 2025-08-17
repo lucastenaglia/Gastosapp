@@ -31,50 +31,25 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
           </div>
           
           <div className="flex items-center space-x-3">
+            <button
+              onClick={onAddExpense}
+              className="bg-gradient-to-r from-primary-600 to-primary-700 active:from-primary-800 active:to-primary-900 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl active:shadow-md active:translate-y-0.5 transition-all duration-200 border-0 focus:outline-none focus:ring-2 focus:ring-primary-300"
+            >
+              <Plus className="h-4 w-4 mr-2 inline" />
+              <span className="text-sm">Agregar Gasto</span>
+            </button>
+            
             {onSetupHousehold && (
-              <div className="relative">
-                <button
-                  onClick={() => setShowLeaveMenu(!showLeaveMenu)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
-                  title={household ? "Configuraciones del hogar" : "Configurar hogar"}
-                >
-                  {household ? <Settings className="h-4 w-4" /> : <Home className="h-4 w-4" />}
-                  <span className="text-sm hidden sm:inline">
-                    {household ? "Configurar" : "Configurar"}
-                  </span>
-                </button>
-                
-                {showLeaveMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
-                    {household ? (
-                      <>
-                        <button
-                          onClick={onSetupHousehold}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
-                        >
-                          <Settings className="h-4 w-4" />
-                          <span>Cambiar Hogar</span>
-                        </button>
-                        <button
-                          onClick={handleLeavePermanent}
-                          className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2"
-                        >
-                          <LogOut className="h-4 w-4" />
-                          <span>Salir del Hogar</span>
-                        </button>
-                      </>
-                    ) : (
-                      <button
-                        onClick={onSetupHousehold}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
-                      >
-                        <Home className="h-4 w-4" />
-                        <span>Configurar Hogar</span>
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
+              <button
+                onClick={onSetupHousehold}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
+                title={household ? "Cambiar hogar" : "Configurar hogar"}
+              >
+                {household ? <Settings className="h-4 w-4" /> : <Home className="h-4 w-4" />}
+                <span className="text-sm hidden sm:inline">
+                  {household ? "Cambiar" : "Configurar"}
+                </span>
+              </button>
             )}
 
             {!household && onReturnToHousehold && (

@@ -31,6 +31,14 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
           </div>
           
           <div className="flex items-center space-x-3">
+            <button
+              onClick={onAddExpense}
+              className="bg-gradient-to-r from-primary-600 to-primary-700 active:from-primary-800 active:to-primary-900 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:shadow-xl active:shadow-md active:translate-y-0.5 transition-all duration-200 border-0 focus:outline-none focus:ring-2 focus:ring-primary-300"
+            >
+              <Plus className="h-4 w-4 mr-2 inline" />
+              <span className="text-sm">Agregar Gasto</span>
+            </button>
+            
             {onSetupHousehold && (
               <div className="relative">
                 <button

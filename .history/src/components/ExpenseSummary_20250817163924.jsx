@@ -42,7 +42,7 @@ const ExpenseSummary = ({ expenses }) => {
       {/* Primera fila - Estadísticas generales */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total General */}
-        <div className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
+        <div className="bg-white p-4 rounded-lg shadow border">
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-600">Total General</p>
             <div className="flex items-center justify-between">
@@ -57,7 +57,7 @@ const ExpenseSummary = ({ expenses }) => {
         </div>
 
         {/* Gastos del Mes */}
-        <div className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
+        <div className="bg-white p-4 rounded-lg shadow border">
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-600">Este Mes</p>
             <div className="flex items-center justify-between">
@@ -72,7 +72,7 @@ const ExpenseSummary = ({ expenses }) => {
         </div>
 
         {/* Total de Gastos */}
-        <div className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
+        <div className="bg-white p-4 rounded-lg shadow border">
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-600">Total Gastos</p>
             <div className="flex items-center justify-between">
@@ -87,7 +87,7 @@ const ExpenseSummary = ({ expenses }) => {
         </div>
 
         {/* Categoría Principal */}
-        <div className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
+        <div className="bg-white p-4 rounded-lg shadow border">
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-600">Categoría Principal</p>
             <div className="flex items-center justify-between">
@@ -110,7 +110,7 @@ const ExpenseSummary = ({ expenses }) => {
       {/* Segunda fila - Estadísticas por persona */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Lucas */}
-        <div className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
+        <div className="bg-white p-4 rounded-lg shadow border">
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-600">Lucas</p>
             <div className="flex items-center justify-between">
@@ -130,7 +130,7 @@ const ExpenseSummary = ({ expenses }) => {
         </div>
 
         {/* Aldi */}
-        <div className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
+        <div className="bg-white p-4 rounded-lg shadow border">
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-600">Aldi</p>
             <div className="flex items-center justify-between">
@@ -150,7 +150,7 @@ const ExpenseSummary = ({ expenses }) => {
         </div>
 
         {/* DS3 */}
-        <div className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
+        <div className="bg-white p-4 rounded-lg shadow border">
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-600">DS3</p>
             <div className="flex items-center justify-between">
