@@ -376,27 +376,6 @@ function App() {
     console.log('🔍 - isFormOpen:', isFormOpen)
   }
 
-  // Helper to get the name of the other household member
-  const getOtherHouseholdMemberName = () => {
-    if (!household || !household.household || !household.household.members) {
-      return 'Sin nombre';
-    }
-    
-    // Buscar el otro miembro (no el usuario actual)
-    const otherMember = household.household.members.find(member => 
-      member.user_id !== user.id
-    );
-    
-    if (otherMember && otherMember.user) {
-      // Solo mostrar el primer nombre (antes del primer espacio)
-      const firstName = otherMember.user.name.split(' ')[0];
-      return firstName;
-    }
-    
-    // Fallback: si no hay otros miembros, mostrar el nombre del hogar
-    return household.household.name || 'Sin nombre';
-  };
-
   // Mostrar la aplicación principal si hay usuario autenticado
   return (
     <div className="min-h-screen bg-gray-50">
@@ -416,7 +395,7 @@ function App() {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-800">
-              {household ? `Gastos del Hogar: ${getOtherHouseholdMemberName()}` : 'Gastos Personales'}
+              {household ? `Gastos del Hogar: ${household.household?.name || 'Sin nombre'}` : 'Gastos Personales'}
             </h2>
             <div className="flex items-center space-x-2">
               <button

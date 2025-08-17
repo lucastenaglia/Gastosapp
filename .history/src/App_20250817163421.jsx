@@ -388,9 +388,7 @@ function App() {
     );
     
     if (otherMember && otherMember.user) {
-      // Solo mostrar el primer nombre (antes del primer espacio)
-      const firstName = otherMember.user.name.split(' ')[0];
-      return firstName;
+      return otherMember.user.name;
     }
     
     // Fallback: si no hay otros miembros, mostrar el nombre del hogar

@@ -378,23 +378,9 @@ function App() {
 
   // Helper to get the name of the other household member
   const getOtherHouseholdMemberName = () => {
-    if (!household || !household.household || !household.household.members) {
-      return 'Sin nombre';
-    }
-    
-    // Buscar el otro miembro (no el usuario actual)
-    const otherMember = household.household.members.find(member => 
-      member.user_id !== user.id
-    );
-    
-    if (otherMember && otherMember.user) {
-      // Solo mostrar el primer nombre (antes del primer espacio)
-      const firstName = otherMember.user.name.split(' ')[0];
-      return firstName;
-    }
-    
-    // Fallback: si no hay otros miembros, mostrar el nombre del hogar
-    return household.household.name || 'Sin nombre';
+    if (!household || !household.household) return 'Sin nombre';
+    const otherMember = household.household.members.find(member => member.user.id !== user.id);
+    return otherMember ? otherMember.user.name : 'Sin nombre';
   };
 
   // Mostrar la aplicación principal si hay usuario autenticado

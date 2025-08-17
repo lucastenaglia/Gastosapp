@@ -82,16 +82,20 @@ function App() {
       console.log('🏠 household es null?', household === null)
       console.log('🏠 household es undefined?', household === undefined)
       console.log('🏠 household truthy?', !!household)
-      // Ejecutar loadExpenses cuando household cambie
-      console.log('🏠 Ejecutando loadExpenses...')
-      loadExpenses()
+      // Solo ejecutar loadExpenses si no estamos en medio de un cambio manual
+      if (!loading) {
+        console.log('🏠 Ejecutando loadExpenses...')
+        loadExpenses()
+      } else {
+        console.log('🏠 No ejecutando loadExpenses - loading es true')
+      }
     } else {
       console.log('🏠 useEffect household - No ejecutando loadExpenses:')
       console.log('🏠 - user:', user)
       console.log('🏠 - household:', household)
       console.log('🏠 - household !== undefined:', household !== undefined)
     }
-  }, [household, user])
+  }, [household, user, loading])
 
   // Verificar el hogar del usuario
   const checkHousehold = async () => {
@@ -376,27 +380,6 @@ function App() {
     console.log('🔍 - isFormOpen:', isFormOpen)
   }
 
-  // Helper to get the name of the other household member
-  const getOtherHouseholdMemberName = () => {
-    if (!household || !household.household || !household.household.members) {
-      return 'Sin nombre';
-    }
-    
-    // Buscar el otro miembro (no el usuario actual)
-    const otherMember = household.household.members.find(member => 
-      member.user_id !== user.id
-    );
-    
-    if (otherMember && otherMember.user) {
-      // Solo mostrar el primer nombre (antes del primer espacio)
-      const firstName = otherMember.user.name.split(' ')[0];
-      return firstName;
-    }
-    
-    // Fallback: si no hay otros miembros, mostrar el nombre del hogar
-    return household.household.name || 'Sin nombre';
-  };
-
   // Mostrar la aplicación principal si hay usuario autenticado
   return (
     <div className="min-h-screen bg-gray-50">
@@ -416,9 +399,276 @@ function App() {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-800">
-              {household ? `Gastos del Hogar: ${getOtherHouseholdMemberName()}` : 'Gastos Personales'}
+              {household ? `Gastos del Hogar: ${household.household?.name || 'Sin nombre'}` : 'Gastos Personales'}
             </h2>
             <div className="flex items-center space-x-2">
+              {/* Botón de debug temporal */}
+              <button
+                onClick={() => {
+                  console.log('🔍 DEBUG ESTADO ACTUAL:')
+                  console.log('🔍 - household:', household)
+                  console.log('🔍 - household es null?', household === null)
+                  console.log('🔍 - household es undefined?', household === undefined)
+                  console.log('🔍 - household truthy?', !!household)
+                  console.log('🔍 - expenses:', expenses)
+                  console.log('🔍 - user:', user)
+                }}
+                className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm"
+              >
+                Debug Estado
+              </button>
+              {/* Botón temporal para agregar campo is_active */}
+              <button
+                onClick={() => {
+                  const sql = `
+-- Agregar campo is_active a household_members
+ALTER TABLE household_members ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT true;
+
+-- Actualizar registros existentes para que sean activos
+UPDATE household_members SET is_active = true WHERE is_active IS NULL;
+                  `
+                  console.log('🔧 SQL para ejecutar en Supabase:')
+                  console.log(sql)
+                  navigator.clipboard.writeText(sql)
+                  alert('SQL copiado al portapapeles. Ejecútalo en Supabase SQL Editor.')
+                }}
+                className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm"
+              >
+                Agregar Campo is_active
+              </button>
+              {/* Botón temporal para migrar gastos de Lucas */}
+              <button
+                onClick={() => {
+                  const sql = `
+-- SQL SIMPLE para migrar gastos de Lucas al hogar
+-- Paso 1: Migrar gastos con person = 'aldi'
+UPDATE expenses 
+SET household_id = '53bcbb81-c090-46ad-9e69-4fa6e324c954'
+WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d' 
+  AND household_id IS NULL 
+  AND person = 'aldi';
+
+-- Paso 2: Migrar gastos compartidos específicos
+UPDATE expenses 
+SET household_id = '53bcbb81-c090-46ad-9e69-4fa6e324c954'
+WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d' 
+  AND household_id IS NULL 
+  AND description IN ('Super', 'Expensas', 'Alquiler', 'Seguro', 'Multa', 'Cochera', 'Easy');
+
+-- Paso 3: Verificar el resultado
+SELECT 
+  description, 
+  person, 
+  household_id, 
+  CASE 
+    WHEN household_id IS NULL THEN 'PERSONAL' 
+    ELSE 'HOGAR' 
+  END as tipo
+FROM expenses 
+WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d'
+ORDER BY household_id NULLS FIRST, description;
+                  `
+                  console.log('🔧 SQL SIMPLE para migrar gastos de Lucas:')
+                  console.log(sql)
+                  navigator.clipboard.writeText(sql)
+                  alert('SQL SIMPLE copiado al portapapeles. Ejecútalo en Supabase SQL Editor.')
+                }}
+                className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded-lg text-sm"
+              >
+                Migrar Gastos de Lucas (SQL Simple)
+              </button>
+              {/* Botón para migrar gastos restantes */}
+              <button
+                onClick={() => {
+                  const sql = `
+-- Migrar los 4 gastos restantes que siguen siendo personales
+-- pero deberían ser del hogar
+
+-- Opción 1: Migrar por descripción específica
+UPDATE expenses 
+SET household_id = '53bcbb81-c090-46ad-9e69-4fa6e324c954'
+WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d' 
+  AND household_id IS NULL 
+  AND description IN ('Super', 'Expensas', 'Alquiler', 'Seguro', 'Multa', 'Cochera', 'Easy', 'Polleria', 'Palacio de oportunidad', 'Primer compra');
+
+-- Opción 2: Migrar todos los gastos restantes (más agresivo)
+-- UPDATE expenses 
+-- SET household_id = '53bcbb81-c090-46ad-9e69-4fa6e324c954'
+-- WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d' 
+--   AND household_id IS NULL;
+
+-- Verificar resultado final
+SELECT 
+  description, 
+  person, 
+  household_id, 
+  CASE 
+    WHEN household_id IS NULL THEN 'PERSONAL' 
+    ELSE 'HOGAR' 
+  END as tipo,
+  amount
+FROM expenses 
+WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d'
+ORDER BY household_id NULLS FIRST, description;
+                  `
+                  console.log('🔧 SQL para migrar gastos restantes:')
+                  console.log(sql)
+                  navigator.clipboard.writeText(sql)
+                  alert('SQL para gastos restantes copiado al portapapeles. Ejecuta primero la Opción 1, y si quedan gastos personales, ejecuta la Opción 2.')
+                }}
+                className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-lg text-sm"
+              >
+                Migrar Gastos Restantes
+              </button>
+              {/* Botón para migrar TODOS los gastos restantes */}
+              <button
+                onClick={() => {
+                  const sql = `
+-- MIGRAR TODOS LOS GASTOS RESTANTES DE LUCAS AL HOGAR
+-- Este SQL es más agresivo y migrará todos los gastos que no tengan household_id
+
+-- Paso 1: Ver cuántos gastos quedan como personales
+SELECT COUNT(*) as gastos_personales_restantes
+FROM expenses 
+WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d' 
+  AND household_id IS NULL;
+
+-- Paso 2: Migrar TODOS los gastos restantes al hogar
+UPDATE expenses 
+SET household_id = '53bcbb81-c090-46ad-9e69-4fa6e324c954'
+WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d' 
+  AND household_id IS NULL;
+
+-- Paso 3: Verificar que no queden gastos personales
+SELECT 
+  description, 
+  person, 
+  household_id, 
+  CASE 
+    WHEN household_id IS NULL THEN 'PERSONAL' 
+    ELSE 'HOGAR' 
+  END as tipo,
+  amount
+FROM expenses 
+WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d'
+ORDER BY household_id NULLS FIRST, description;
+                  `
+                  console.log('🔧 SQL AGRESIVO para migrar TODOS los gastos restantes:')
+                  console.log(sql)
+                  navigator.clipboard.writeText(sql)
+                  alert('SQL AGRESIVO copiado al portapapeles. Este SQL migrará TODOS los gastos restantes de Lucas al hogar.')
+                }}
+                className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-sm font-bold"
+              >
+                MIGRAR TODOS (SQL Agresivo)
+              </button>
+              {/* Botón para debuggear "Volver al Hogar" */}
+              <button
+                onClick={() => {
+                  console.log('🔍 DEBUG VOLVER AL HOGAR:')
+                  console.log('🔍 - Usuario actual:', user)
+                  console.log('🔍 - Usuario ID:', user.id)
+                  console.log('🔍 - Usuario completo:', user)
+                  console.log('🔍 - Llamando a returnToHousehold manualmente...')
+                  
+                  // Llamar directamente a la función del servicio
+                  import('./services/expenseService.js').then(module => {
+                    console.log('🔍 Módulo cargado:', module)
+                    if (module.returnToHousehold) {
+                      console.log('🔍 Llamando a returnToHousehold...')
+                      module.returnToHousehold(user.id).then(result => {
+                        console.log('🔍 Resultado de returnToHousehold:', result)
+                      }).catch(err => {
+                        console.error('🔍 Error en returnToHousehold:', err)
+                      })
+                    } else {
+                      console.error('🔍 returnToHousehold no encontrado en el módulo')
+                    }
+                  }).catch(err => {
+                    console.error('🔍 Error cargando módulo:', err)
+                  })
+                }}
+                className="bg-pink-500 hover:bg-pink-600 text-white px-3 py-2 rounded-lg text-sm"
+              >
+                Debug Volver al Hogar
+              </button>
+              {/* Botón para verificar estado actual */}
+              <button
+                onClick={() => {
+                  const sql = `
+-- Verificar estado actual de gastos de Lucas
+SELECT 
+  description, 
+  person, 
+  household_id, 
+  CASE 
+    WHEN household_id IS NULL THEN 'PERSONAL' 
+    ELSE 'HOGAR' 
+  END as tipo,
+  amount,
+  created_at
+FROM expenses 
+WHERE user_id = '2e85b8e1-63ee-4e50-a079-41d98e674f4d'
+ORDER BY household_id NULLS FIRST, description;
+                  `
+                  console.log('🔍 SQL para verificar estado actual:')
+                  console.log(sql)
+                  navigator.clipboard.writeText(sql)
+                  alert('SQL copiado al portapapeles. Ejecútalo en Supabase SQL Editor para ver el estado actual.')
+                }}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm"
+              >
+                Verificar Estado Actual
+              </button>
+              {/* Botón temporal para debuggear loadExpenses */}
+              <button
+                onClick={() => {
+                  console.log('🔍 DEBUG LOADEXPENSES:')
+                  console.log('🔍 - user:', user)
+                  console.log('🔍 - household:', household)
+                  console.log('🔍 - household es null?', household === null)
+                  console.log('🔍 - household es undefined?', household === undefined)
+                  console.log('🔍 - household truthy?', !!household)
+                  console.log('🔍 - expenses actuales:', expenses)
+                  console.log('🔍 - Llamando a loadExpenses manualmente...')
+                  loadExpenses()
+                }}
+                className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm"
+              >
+                Debug LoadExpenses
+              </button>
+              {/* Botón temporal para forzar modo personal */}
+              <button
+                onClick={() => {
+                  console.log('🔧 FORZANDO MODO PERSONAL...')
+                  console.log('🔧 household ANTES:', household)
+                  setHousehold(null)
+                  console.log('🔧 household DESPUÉS:', null)
+                  console.log('🔧 El useEffect debería llamar a loadExpenses...')
+                }}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg text-sm"
+              >
+                Forzar Modo Personal
+              </button>
+              {/* Botón para verificar estado completo */}
+              <button
+                onClick={() => {
+                  console.log('🔍 ESTADO COMPLETO ACTUAL:')
+                  console.log('🔍 - user:', user)
+                  console.log('🔍 - household:', household)
+                  console.log('🔍 - household es null?', household === null)
+                  console.log('🔍 - household es undefined?', household === undefined)
+                  console.log('🔍 - household truthy?', !!household)
+                  console.log('🔍 - expenses:', expenses)
+                  console.log('🔍 - expenses.length:', expenses.length)
+                  console.log('🔍 - Título actual:', household ? `Gastos del Hogar: ${household.household?.name || 'Sin nombre'}` : 'Gastos Personales')
+                  console.log('🔍 - Llamando a loadExpenses manualmente...')
+                  loadExpenses()
+                }}
+                className="bg-teal-500 hover:bg-teal-600 text-white px-3 py-2 rounded-lg text-sm"
+              >
+                Verificar Estado Completo
+              </button>
               <button
                 onClick={() => setIsFormOpen(true)}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
