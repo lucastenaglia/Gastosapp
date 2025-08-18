@@ -90,7 +90,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
    const autoTotal = (personTotals.auto || 0) + (personTotals.ds3 || 0)
   
   const formatCurrency = (amount) => {
-    return `$${Math.round(amount).toLocaleString('es-ES')}`
+    return `$${Math.round(amount).toLocaleString('en-US')}`
   }
 
   return (
@@ -106,7 +106,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                 {formatCurrency(totalExpenses)}
               </p>
               <div className="bg-blue-100 p-2 rounded-lg">
-                <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-blue-600" />
+                <DollarSign className="h-5 w-5 text-blue-600" />
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                 {formatCurrency(monthlyTotal)}
               </p>
               <div className="bg-green-100 p-2 rounded-lg">
-                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-green-600" />
+                <Calendar className="h-5 w-5 text-green-600" />
               </div>
             </div>
           </div>
@@ -136,7 +136,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                 {expenses.length}
               </p>
               <div className="bg-purple-100 p-2 rounded-lg">
-                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-purple-600" />
+                <TrendingUp className="h-5 w-5 text-purple-600" />
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                 </p>
               </div>
               <div className="bg-orange-100 p-2 rounded-lg">
-                <PieChart className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-orange-600" />
+                <PieChart className="h-5 w-5 text-orange-600" />
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                   </p>
                 </div>
                 <div className="bg-red-100 p-2 rounded-lg">
-                  <span className="text-red-600 text-lg sm:text-xl lg:text-2xl">🚗</span>
+                  <span className="text-red-600 text-lg">🚗</span>
                 </div>
               </div>
             </div>

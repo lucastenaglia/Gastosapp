@@ -90,7 +90,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
    const autoTotal = (personTotals.auto || 0) + (personTotals.ds3 || 0)
   
   const formatCurrency = (amount) => {
-    return `$${Math.round(amount).toLocaleString('es-ES')}`
+    return `$${Math.round(amount).toLocaleString('en-US')}`
   }
 
   return (
@@ -156,7 +156,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                 </p>
               </div>
               <div className="bg-orange-100 p-2 rounded-lg">
-                <PieChart className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-orange-600" />
+                <PieChart className="h-5 w-5 text-orange-600" />
               </div>
             </div>
           </div>

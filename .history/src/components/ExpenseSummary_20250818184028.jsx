@@ -90,7 +90,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
    const autoTotal = (personTotals.auto || 0) + (personTotals.ds3 || 0)
   
   const formatCurrency = (amount) => {
-    return `$${Math.round(amount).toLocaleString('es-ES')}`
+    return `$${Math.round(amount).toLocaleString('en-US')}`
   }
 
   return (
