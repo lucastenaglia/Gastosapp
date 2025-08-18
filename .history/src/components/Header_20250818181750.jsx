@@ -22,7 +22,7 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
 
   return (
     <header className="bg-white shadow-lg border-b border-gray-200">
-      <div className="container mx-auto px-4 py-6 max-w-5xl">
+      <div className="container mx-auto px-4 py-6 max-w-4xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="bg-gradient-to-br from-primary-600 to-primary-700 p-3 rounded-xl shadow-lg">
@@ -106,7 +106,7 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
             )}
             
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-600">Hola, {getFirstName(user?.name) || user?.email || 'Usuario'}</span>
+              <span className="text-sm text-gray-600">Hola, {user?.name || user?.email || 'Usuario'}</span>
               <button
                 onClick={onLogout}
                 className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"

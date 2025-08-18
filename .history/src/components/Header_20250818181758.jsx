@@ -22,7 +22,7 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
 
   return (
     <header className="bg-white shadow-lg border-b border-gray-200">
-      <div className="container mx-auto px-4 py-6 max-w-5xl">
+      <div className="container mx-auto px-4 py-6 max-w-4xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="bg-gradient-to-br from-primary-600 to-primary-700 p-3 rounded-xl shadow-lg">
