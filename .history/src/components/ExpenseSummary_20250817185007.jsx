@@ -174,11 +174,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
             const icons = ['👤', '👤']
             
             return (
-              <div 
-                key={member.user_id} 
-                className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer"
-                onClick={() => onFilterPerson && onFilterPerson(member.user?.name?.toLowerCase() || 'usuario')}
-              >
+              <div key={member.user_id} className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-gray-600">{firstName}</p>
                   <div className="flex items-center justify-between">
@@ -200,10 +196,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
           })}
 
           {/* Auto */}
-          <div 
-            className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer"
-            onClick={() => onFilterPerson && onFilterPerson('auto')}
-          >
+          <div className="bg-white p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
             <div className="space-y-2">
               <p className="text-sm font-medium text-gray-600">Auto</p>
               <div className="flex items-center justify-between">

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Trash2, Edit, Calendar, DollarSign, Share2, Users } from 'lucide-react'
 
-const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading, householdMembers = [], filteredPerson = null, onClearFilter = null }) => {
+const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading, householdMembers = [] }) => {
   const [editingId, setEditingId] = useState(null)
   const [editForm, setEditForm] = useState({})
 
@@ -61,43 +61,6 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading
     })
   }
 
-  // Función para obtener el nombre real de la persona
-  const getPersonDisplayName = (personName) => {
-    if (!personName) return 'lucas'
-    
-    // Buscar en los miembros del hogar para obtener el nombre real
-    const member = householdMembers.find(member => {
-      const memberName = member.user?.name?.toLowerCase() || ''
-      const personLower = personName.toLowerCase()
-      
-      // Mapear nombres antiguos
-      if (personLower === 'aldi' && memberName.includes('aldana')) return true
-      if (personLower === 'lucas' && memberName.includes('lucas')) return true
-      
-      // Mapear nombres exactos
-      return memberName === personLower || memberName.includes(personLower)
-    })
-    
-    if (member && member.user?.name) {
-      return member.user.name.split(' ')[0] // Solo primer nombre
-    }
-    
-    return personName
-  }
-
-  // Función para obtener el emoji de la persona
-  const getPersonEmoji = (personName) => {
-    if (!personName) return '👤'
-    
-    const displayName = getPersonDisplayName(personName).toLowerCase()
-    
-    if (displayName.includes('lucas')) return '👨'
-    if (displayName.includes('aldana')) return '👩'
-    if (personName === 'auto') return '🚗'
-    
-    return '👤'
-  }
-
   if (loading) {
     return (
       <div className="card">
@@ -132,20 +95,9 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading
 
   return (
     <div className="card">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">
-          Historial de Gastos
-        </h2>
-        {filteredPerson && onClearFilter && (
-          <button
-            onClick={onClearFilter}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg flex items-center space-x-2 text-sm transition-colors"
-          >
-            <span>✕</span>
-            <span>Limpiar Filtro</span>
-          </button>
-        )}
-      </div>
+      <h2 className="text-xl font-semibold text-gray-900 mb-6">
+        Historial de Gastos
+      </h2>
       
       <div className="space-y-3">
         {expenses.map(expense => (
@@ -236,8 +188,8 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading
                         <span className="capitalize text-xs sm:text-sm">{expense.category}</span>
                         <span className="hidden sm:inline">•</span>
                         <span className="flex items-center space-x-1 text-gray-600">
-                          <span>{getPersonEmoji(expense.person)}</span>
-                          <span className="capitalize text-xs sm:text-sm">{getPersonDisplayName(expense.person)}</span>
+                          <span>{expense.person === 'lucas' ? '👨' : expense.person === 'aldana' ? '👩' : '👤'}</span>
+                          <span className="capitalize text-xs sm:text-sm">{expense.person || 'lucas'}</span>
                         </span>
                         {expense.isShared && (
                           <>
@@ -297,8 +249,8 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading
                 {/* Información adicional en móvil */}
                 <div className="sm:hidden flex items-center justify-between text-sm text-gray-600 border-t pt-2">
                   <span className="flex items-center space-x-1">
-                    <span>{getPersonEmoji(expense.person)}</span>
-                    <span className="capitalize">{getPersonDisplayName(expense.person)}</span>
+                    <span>{expense.person === 'lucas' ? '👨' : '👩'}</span>
+                    <span className="capitalize">{expense.person || 'lucas'}</span>
                   </span>
                   <span className="text-xs">
                     {new Date(expense.date).toLocaleDateString('es-ES', { year: 'numeric' })}

@@ -421,9 +421,9 @@ export const getExpenses = async (userId) => {
       .eq('household_id', householdMember.household_id)
       .order('created_at', { ascending: false })
     
-    console.log('📊 getExpenses - SOLO gastos del hogar obtenidos:', expensesData)
-    console.log('📊 getExpenses - Cantidad de gastos del hogar:', expensesData ? expensesData.length : 0)
-    console.log('❌ getExpenses - Error obteniendo gastos del hogar:', expensesError)
+    console.log('📊 getExpenses - TODOS los gastos obtenidos:', expensesData)
+    console.log('📊 getExpenses - Cantidad total de gastos:', expensesData ? expensesData.length : 0)
+    console.log('❌ getExpenses - Error obteniendo gastos:', expensesError)
     
     if (expensesError) {
       console.error('❌ Error obteniendo gastos:', expensesError)

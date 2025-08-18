@@ -493,8 +493,6 @@ function App() {
                   onEdit={handleEditExpense}
                   currentUser={user}
                   householdMembers={household?.household?.members || []}
-                  filteredPerson={filteredPerson}
-                  onClearFilter={clearFilter}
                 />
               </div>
             </div>

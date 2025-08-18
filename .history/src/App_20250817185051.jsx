@@ -444,11 +444,6 @@ function App() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-800">
               {household ? `Gastos del Hogar: ${getOtherHouseholdMemberName()}` : 'Gastos Personales'}
-              {filteredPerson && (
-                <span className="text-lg font-normal text-blue-600 ml-2">
-                  (Filtrado: {filteredPerson === 'auto' ? 'Auto' : filteredPerson})
-                </span>
-              )}
             </h2>
             <div className="flex items-center space-x-2">
               <button
@@ -465,6 +460,15 @@ function App() {
                 <span>📊</span>
                 <span>Estadísticas</span>
               </button>
+              {filteredPerson && (
+                <button
+                  onClick={clearFilter}
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg flex items-center space-x-2 text-sm"
+                >
+                  <span>✕</span>
+                  <span>Limpiar Filtro</span>
+                </button>
+              )}
             </div>
           </div>
           
@@ -478,23 +482,19 @@ function App() {
               {/* Resumen de gastos - arriba */}
               <div>
                 <ExpenseSummary 
-                  expenses={filteredExpenses} 
+                  expenses={expenses} 
                   isPersonal={!household} 
                   householdMembers={household?.household?.members || []}
-                  onFilterPerson={household ? handleFilterPerson : null}
                 />
               </div>
               
               {/* Lista de gastos - abajo */}
               <div>
                 <ExpenseList 
-                  expenses={filteredExpenses}
+                  expenses={expenses}
                   onDelete={handleDeleteExpense}
                   onEdit={handleEditExpense}
                   currentUser={user}
-                  householdMembers={household?.household?.members || []}
-                  filteredPerson={filteredPerson}
-                  onClearFilter={clearFilter}
                 />
               </div>
             </div>

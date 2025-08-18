@@ -465,6 +465,15 @@ function App() {
                 <span>📊</span>
                 <span>Estadísticas</span>
               </button>
+              {filteredPerson && (
+                <button
+                  onClick={clearFilter}
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg flex items-center space-x-2 text-sm"
+                >
+                  <span>✕</span>
+                  <span>Limpiar Filtro</span>
+                </button>
+              )}
             </div>
           </div>
           
@@ -478,23 +487,19 @@ function App() {
               {/* Resumen de gastos - arriba */}
               <div>
                 <ExpenseSummary 
-                  expenses={filteredExpenses} 
+                  expenses={expenses} 
                   isPersonal={!household} 
                   householdMembers={household?.household?.members || []}
-                  onFilterPerson={household ? handleFilterPerson : null}
                 />
               </div>
               
               {/* Lista de gastos - abajo */}
               <div>
                 <ExpenseList 
-                  expenses={filteredExpenses}
+                  expenses={expenses}
                   onDelete={handleDeleteExpense}
                   onEdit={handleEditExpense}
                   currentUser={user}
-                  householdMembers={household?.household?.members || []}
-                  filteredPerson={filteredPerson}
-                  onClearFilter={clearFilter}
                 />
               </div>
             </div>

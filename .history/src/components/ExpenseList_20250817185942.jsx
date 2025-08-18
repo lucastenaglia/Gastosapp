@@ -132,20 +132,9 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading
 
   return (
     <div className="card">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">
-          Historial de Gastos
-        </h2>
-        {filteredPerson && onClearFilter && (
-          <button
-            onClick={onClearFilter}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg flex items-center space-x-2 text-sm transition-colors"
-          >
-            <span>✕</span>
-            <span>Limpiar Filtro</span>
-          </button>
-        )}
-      </div>
+      <h2 className="text-xl font-semibold text-gray-900 mb-6">
+        Historial de Gastos
+      </h2>
       
       <div className="space-y-3">
         {expenses.map(expense => (

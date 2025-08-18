@@ -465,6 +465,15 @@ function App() {
                 <span>📊</span>
                 <span>Estadísticas</span>
               </button>
+              {filteredPerson && (
+                <button
+                  onClick={clearFilter}
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg flex items-center space-x-2 text-sm"
+                >
+                  <span>✕</span>
+                  <span>Limpiar Filtro</span>
+                </button>
+              )}
             </div>
           </div>
           
@@ -493,8 +502,6 @@ function App() {
                   onEdit={handleEditExpense}
                   currentUser={user}
                   householdMembers={household?.household?.members || []}
-                  filteredPerson={filteredPerson}
-                  onClearFilter={clearFilter}
                 />
               </div>
             </div>

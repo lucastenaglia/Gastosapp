@@ -343,11 +343,13 @@ function App() {
     try {
       console.log('🔄 handleLeaveHouseholdPermanently iniciado')
       console.log('🔄 Usuario actual:', user.email)
-      console.log('🔄 Usuario ID:', user.id)
+      console.log('🔄 Hogar actual:', household)
       
       await leaveHouseholdPermanently(user.id)
+      console.log('✅ leaveHouseholdPermanently completado')
+      
       setHousehold(null)
-      setFilteredPerson(null) // Limpiar filtro al salir del hogar
+      console.log('✅ household establecido como null')
       
       await loadExpenses()
       console.log('✅ loadExpenses completado')
@@ -358,32 +360,6 @@ function App() {
       setError('Error al salir del hogar permanentemente')
     }
   }
-
-  // Función para filtrar gastos por persona
-  const handleFilterPerson = (personName) => {
-    if (filteredPerson === personName) {
-      // Si se hace clic en la misma persona, quitar el filtro
-      setFilteredPerson(null)
-    } else {
-      // Aplicar nuevo filtro
-      setFilteredPerson(personName)
-    }
-  }
-
-  // Función para limpiar filtro
-  const clearFilter = () => {
-    setFilteredPerson(null)
-  }
-
-  // Filtrar gastos por persona si hay filtro activo
-  const filteredExpenses = filteredPerson 
-    ? expenses.filter(expense => {
-        if (filteredPerson === 'auto') {
-          return expense.category === 'auto'
-        }
-        return expense.person?.toLowerCase() === filteredPerson.toLowerCase()
-      })
-    : expenses
 
   // Mostrar pantalla de login si no hay usuario autenticado
   if (!user) {
@@ -444,11 +420,6 @@ function App() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-800">
               {household ? `Gastos del Hogar: ${getOtherHouseholdMemberName()}` : 'Gastos Personales'}
-              {filteredPerson && (
-                <span className="text-lg font-normal text-blue-600 ml-2">
-                  (Filtrado: {filteredPerson === 'auto' ? 'Auto' : filteredPerson})
-                </span>
-              )}
             </h2>
             <div className="flex items-center space-x-2">
               <button
@@ -478,23 +449,19 @@ function App() {
               {/* Resumen de gastos - arriba */}
               <div>
                 <ExpenseSummary 
-                  expenses={filteredExpenses} 
+                  expenses={expenses} 
                   isPersonal={!household} 
                   householdMembers={household?.household?.members || []}
-                  onFilterPerson={household ? handleFilterPerson : null}
                 />
               </div>
               
               {/* Lista de gastos - abajo */}
               <div>
                 <ExpenseList 
-                  expenses={filteredExpenses}
+                  expenses={expenses}
                   onDelete={handleDeleteExpense}
                   onEdit={handleEditExpense}
                   currentUser={user}
-                  householdMembers={household?.household?.members || []}
-                  filteredPerson={filteredPerson}
-                  onClearFilter={clearFilter}
                 />
               </div>
             </div>
