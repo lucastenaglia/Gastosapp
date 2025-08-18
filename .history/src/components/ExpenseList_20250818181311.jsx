@@ -142,41 +142,21 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold text-gray-900">
           Historial de Gastos
-          {filteredCategory && (
-            <span className="text-sm font-normal text-gray-600 ml-2">
-              (Filtrado: {filteredCategory})
-            </span>
-          )}
         </h2>
-        <div className="flex space-x-2">
-          {filteredCategory && onFilterCategory && (
-            <button
-              onClick={() => onFilterCategory(null)}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg flex items-center space-x-2 text-sm transition-colors"
-            >
-              <span>✕</span>
-              <span>Limpiar Categoría</span>
-            </button>
-          )}
-          {filteredPerson && onClearFilter && (
-            <button
-              onClick={onClearFilter}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg flex items-center space-x-2 text-sm transition-colors"
-            >
-              <span>✕</span>
-              <span>Limpiar Filtro</span>
-            </button>
-          )}
-        </div>
+        {filteredPerson && onClearFilter && (
+          <button
+            onClick={onClearFilter}
+            className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg flex items-center space-x-2 text-sm transition-colors"
+          >
+            <span>✕</span>
+            <span>Limpiar Filtro</span>
+          </button>
+        )}
       </div>
       
       <div className="space-y-3">
         {expenses.map(expense => (
-          <div 
-            key={expense.id} 
-            className={`border border-gray-200 rounded-lg p-3 sm:p-4 bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300 ${expense.isShared ? 'border-blue-300 bg-blue-50' : ''} ${onFilterCategory ? 'cursor-pointer' : ''}`}
-            onClick={() => handleExpenseClick(expense)}
-          >
+          <div key={expense.id} className={`border border-gray-200 rounded-lg p-3 sm:p-4 bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300 ${expense.isShared ? 'border-blue-300 bg-blue-50' : ''}`}>
             {editingId === expense.id ? (
               <div className="space-y-3">
                 <input

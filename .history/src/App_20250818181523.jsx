@@ -355,7 +355,6 @@ function App() {
       await leaveHouseholdPermanently(user.id)
       setHousehold(null)
       setFilteredPerson(null) // Limpiar filtro al salir del hogar
-      setFilteredCategory(null) // Limpiar filtro de categoría al salir del hogar
       
       await loadExpenses()
       console.log('✅ loadExpenses completado')

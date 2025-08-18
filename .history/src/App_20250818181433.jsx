@@ -290,9 +290,6 @@ function App() {
       
       console.log('🔄 Estableciendo household como null...')
       setHousehold(null)
-      // Limpiar filtros al salir del hogar
-      setFilteredPerson(null)
-      setFilteredCategory(null)
       console.log('✅ household establecido como null')
       
       // Verificar que el estado se actualizó
@@ -320,9 +317,6 @@ function App() {
       console.log('🏠 householdInfo obtenido:', householdInfo)
       
       setHousehold(householdInfo)
-      // Limpiar filtros al volver al hogar
-      setFilteredPerson(null)
-      setFilteredCategory(null)
       console.log('✅ household establecido:', householdInfo)
       
       // NO llamar a loadExpenses aquí - el useEffect se encargará
@@ -355,7 +349,6 @@ function App() {
       await leaveHouseholdPermanently(user.id)
       setHousehold(null)
       setFilteredPerson(null) // Limpiar filtro al salir del hogar
-      setFilteredCategory(null) // Limpiar filtro de categoría al salir del hogar
       
       await loadExpenses()
       console.log('✅ loadExpenses completado')
@@ -392,7 +385,6 @@ function App() {
   // Función para limpiar filtro
   const clearFilter = () => {
     setFilteredPerson(null)
-    setFilteredCategory(null)
   }
 
   // Filtrar gastos por persona y/o categoría si hay filtros activos
@@ -529,8 +521,6 @@ function App() {
                   householdMembers={household?.household?.members || []}
                   filteredPerson={filteredPerson}
                   onClearFilter={clearFilter}
-                  onFilterCategory={handleFilterCategory}
-                  filteredCategory={filteredCategory}
                 />
               </div>
             </div>

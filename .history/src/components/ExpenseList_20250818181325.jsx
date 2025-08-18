@@ -172,11 +172,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading
       
       <div className="space-y-3">
         {expenses.map(expense => (
-          <div 
-            key={expense.id} 
-            className={`border border-gray-200 rounded-lg p-3 sm:p-4 bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300 ${expense.isShared ? 'border-blue-300 bg-blue-50' : ''} ${onFilterCategory ? 'cursor-pointer' : ''}`}
-            onClick={() => handleExpenseClick(expense)}
-          >
+          <div key={expense.id} className={`border border-gray-200 rounded-lg p-3 sm:p-4 bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300 ${expense.isShared ? 'border-blue-300 bg-blue-50' : ''}`}>
             {editingId === expense.id ? (
               <div className="space-y-3">
                 <input

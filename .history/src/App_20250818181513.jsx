@@ -320,9 +320,6 @@ function App() {
       console.log('🏠 householdInfo obtenido:', householdInfo)
       
       setHousehold(householdInfo)
-      // Limpiar filtros al volver al hogar
-      setFilteredPerson(null)
-      setFilteredCategory(null)
       console.log('✅ household establecido:', householdInfo)
       
       // NO llamar a loadExpenses aquí - el useEffect se encargará
@@ -355,7 +352,6 @@ function App() {
       await leaveHouseholdPermanently(user.id)
       setHousehold(null)
       setFilteredPerson(null) // Limpiar filtro al salir del hogar
-      setFilteredCategory(null) // Limpiar filtro de categoría al salir del hogar
       
       await loadExpenses()
       console.log('✅ loadExpenses completado')
