@@ -581,7 +581,6 @@ function App() {
           expenses={expenses}
           onClose={() => setIsStatsOpen(false)}
           isOpen={isStatsOpen}
-          categories={categories}
         />
       )}
 

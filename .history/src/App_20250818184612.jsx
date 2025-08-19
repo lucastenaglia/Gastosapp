@@ -6,7 +6,6 @@ import ExpenseSummary from './components/ExpenseSummary'
 import ExpenseStats from './components/ExpenseStats'
 import Login from './components/Login'
 import HouseholdSetup from './components/HouseholdSetup'
-import CategoryManager from './components/CategoryManager'
 import { 
   getUserHousehold, 
   getExpenses, 
@@ -529,7 +528,6 @@ function App() {
                   isPersonal={!household} 
                   householdMembers={household?.household?.members || []}
                   onFilterPerson={household ? handleFilterPerson : null}
-                  categories={categories}
                 />
               </div>
               
@@ -545,7 +543,6 @@ function App() {
                   onClearFilter={clearFilter}
                   onFilterCategory={handleFilterCategory}
                   filteredCategory={filteredCategory}
-                  categories={categories}
                 />
               </div>
             </div>
@@ -560,7 +557,6 @@ function App() {
           currentUser={user}
           household={household}
           householdMembers={household?.household?.members || []}
-          categories={categories}
         />
       )}
 
@@ -581,15 +577,6 @@ function App() {
           expenses={expenses}
           onClose={() => setIsStatsOpen(false)}
           isOpen={isStatsOpen}
-          categories={categories}
-        />
-      )}
-
-      {isCategoryManagerOpen && (
-        <CategoryManager
-          onClose={() => setIsCategoryManagerOpen(false)}
-          currentCategories={categories}
-          onUpdateCategories={handleUpdateCategories}
         />
       )}
     </div>

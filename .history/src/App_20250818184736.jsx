@@ -529,7 +529,6 @@ function App() {
                   isPersonal={!household} 
                   householdMembers={household?.household?.members || []}
                   onFilterPerson={household ? handleFilterPerson : null}
-                  categories={categories}
                 />
               </div>
               
@@ -581,7 +580,6 @@ function App() {
           expenses={expenses}
           onClose={() => setIsStatsOpen(false)}
           isOpen={isStatsOpen}
-          categories={categories}
         />
       )}
 

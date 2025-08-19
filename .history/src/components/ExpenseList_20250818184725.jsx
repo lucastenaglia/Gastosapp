@@ -121,6 +121,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading
     
     if (displayName.includes('lucas')) return '👨'
     if (displayName.includes('aldana')) return '👩'
+    if (personName === 'auto') return '🚗'
     
     return '👤'
   }

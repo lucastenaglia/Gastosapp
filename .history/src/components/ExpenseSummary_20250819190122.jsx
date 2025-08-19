@@ -182,11 +182,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
 
       {/* Segunda fila - Estadísticas por persona (solo en modo hogar) */}
       {!isPersonal && (
-        <div className={`grid grid-cols-1 gap-4 ${
-          (personTotals.auto && personTotals.auto > 0) 
-            ? 'lg:grid-cols-3' 
-            : 'lg:grid-cols-2'
-        }`}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Usuarios del hogar (máximo 2) */}
           {householdMembers.slice(0, 2).map((member, index) => {
             const firstName = member.user?.name?.split(' ')[0] || 'Usuario'

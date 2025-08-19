@@ -6,7 +6,6 @@ import ExpenseSummary from './components/ExpenseSummary'
 import ExpenseStats from './components/ExpenseStats'
 import Login from './components/Login'
 import HouseholdSetup from './components/HouseholdSetup'
-import CategoryManager from './components/CategoryManager'
 import { 
   getUserHousehold, 
   getExpenses, 
@@ -111,35 +110,34 @@ function App() {
 
   // Verificar el hogar del usuario
   const checkHousehold = async () => {
-    if (!user) return
-    
     try {
-      const householdInfo = await getUserHousehold(user.id)
-      if (householdInfo) {
-        setHousehold(householdInfo)
-      } else {
-        setHousehold(null)
+      console.log('🔍 checkHousehold iniciado para usuario:', user?.id)
+      console.log('🔍 checkHousehold - user completo:', user)
+      console.log('🔍 checkHousehold - user.email:', user?.email)
+      console.log('🔍 checkHousehold - user.id tipo:', typeof user?.id)
+      console.log('🔍 checkHousehold - user.id valor:', JSON.stringify(user?.id))
+      
+      if (!user || !user.id) {
+        console.error('❌ checkHousehold - Usuario o user.id es null/undefined')
+        console.error('❌ checkHousehold - user:', user)
+        return
       }
-    } catch (error) {
-      console.error('❌ Error verificando hogar:', error)
+      
+      const householdInfo = await getUserHousehold(user.id)
+      console.log('🏠 checkHousehold - householdInfo obtenido:', householdInfo)
+      
+      setHousehold(householdInfo)
+      console.log('✅ checkHousehold - household establecido:', householdInfo)
+      
+      if (!householdInfo) {
+        console.log('⚠️ Usuario no está en ningún hogar, pero NO abriendo modal automáticamente')
+      } else {
+        console.log('✅ Usuario está en hogar:', householdInfo.household.name)
+      }
+    } catch (err) {
+      console.error('❌ Error verificando hogar:', err)
       setHousehold(null)
     }
-  }
-
-  // Función para manejar la configuración del hogar
-  const handleSetupHousehold = (type) => {
-    if (type === 'categories') {
-      setIsCategoryManagerOpen(true)
-    } else {
-      setIsHouseholdSetupOpen(true)
-    }
-  }
-
-  // Función para actualizar categorías
-  const handleUpdateCategories = (updatedCategories) => {
-    setCategories(updatedCategories)
-    // Aquí podrías guardar las categorías en la base de datos si es necesario
-    console.log('📝 Categorías actualizadas:', updatedCategories)
   }
 
   // Cargar gastos solo si hay usuario autenticado
@@ -469,14 +467,14 @@ function App() {
   // Mostrar la aplicación principal si hay usuario autenticado
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header
-        onAddExpense={() => setIsFormOpen(true)}
-        onLogout={handleLogout}
-        user={user}
+      <Header 
+        user={user} 
         household={household}
-        onSetupHousehold={handleSetupHousehold}
+        onSetupHousehold={() => setIsHouseholdSetupOpen(true)}
         onLeaveHousehold={handleLeaveHousehold}
         onReturnToHousehold={handleReturnToHousehold}
+        onAddExpense={() => setIsFormOpen(true)}
+        onLogout={handleLogout}
         onLeaveHouseholdPermanently={handleLeaveHouseholdPermanently}
       />
       
@@ -529,7 +527,6 @@ function App() {
                   isPersonal={!household} 
                   householdMembers={household?.household?.members || []}
                   onFilterPerson={household ? handleFilterPerson : null}
-                  categories={categories}
                 />
               </div>
               
@@ -545,7 +542,6 @@ function App() {
                   onClearFilter={clearFilter}
                   onFilterCategory={handleFilterCategory}
                   filteredCategory={filteredCategory}
-                  categories={categories}
                 />
               </div>
             </div>
@@ -560,7 +556,6 @@ function App() {
           currentUser={user}
           household={household}
           householdMembers={household?.household?.members || []}
-          categories={categories}
         />
       )}
 
@@ -581,15 +576,6 @@ function App() {
           expenses={expenses}
           onClose={() => setIsStatsOpen(false)}
           isOpen={isStatsOpen}
-          categories={categories}
-        />
-      )}
-
-      {isCategoryManagerOpen && (
-        <CategoryManager
-          onClose={() => setIsCategoryManagerOpen(false)}
-          currentCategories={categories}
-          onUpdateCategories={handleUpdateCategories}
         />
       )}
     </div>
