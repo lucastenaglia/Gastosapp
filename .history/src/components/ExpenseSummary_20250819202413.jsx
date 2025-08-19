@@ -179,7 +179,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                   {topCategory ? formatCurrency(topCategory[1]) : ''}
                 </p>
               </div>
-              <div className="bg-orange-100 p-2 rounded-lg mt-4 sm:mt-0">
+              <div className="bg-orange-100 p-2 rounded-lg mt-4">
                 <PieChart className="h-4 w-4 sm:h-5 sm:w-5 lg:h-8 lg:w-8 text-orange-600" />
               </div>
             </div>

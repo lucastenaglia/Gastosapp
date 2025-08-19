@@ -1,4 +1,4 @@
-import { TrendingUp, Calendar, DollarSign, PieChart, User, Car } from 'lucide-react'
+import { TrendingUp, Calendar, DollarSign, PieChart } from 'lucide-react'
 
 const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], onFilterPerson = null, categories = [] }) => {
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0)
@@ -25,14 +25,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
   const getCategoryName = (categoryValue) => {
     if (categories.length > 0) {
       const category = categories.find(cat => cat.value === categoryValue)
-      const categoryName = category ? category.label : categoryValue
-      
-      // Abreviar si tiene más de 10 caracteres, poniendo punto en el carácter 10
-      if (categoryName.length > 10) {
-        return categoryName.substring(0, 10) + '.'
-      }
-      
-      return categoryName
+      return category ? category.label : categoryValue
     }
     return categoryValue
   }
@@ -172,14 +165,14 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
             <p className="text-sm font-medium text-gray-600">Categoría Principal</p>
             <div className="flex items-end sm:items-center justify-between">
               <div className="flex-1">
-                <p className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900">
+                <p className="text-lg sm:text-xl font-bold text-gray-900">
                   {topCategory ? getCategoryName(topCategory[0]) : 'N/A'}
                 </p>
                 <p className="text-sm text-gray-600">
                   {topCategory ? formatCurrency(topCategory[1]) : ''}
                 </p>
               </div>
-              <div className="bg-orange-100 p-2 rounded-lg mt-4 sm:mt-0">
+              <div className="bg-orange-100 p-2 rounded-lg">
                 <PieChart className="h-4 w-4 sm:h-5 sm:w-5 lg:h-8 lg:w-8 text-orange-600" />
               </div>
             </div>
@@ -198,6 +191,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
               const realName = member.user?.name?.toLowerCase() || firstName.toLowerCase()
               const total = userTotals[firstName] || 0
               const colors = ['bg-blue-100']
+              const icons = ['👤']
               
               return (
                 <div 
@@ -216,8 +210,8 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                           {totalExpenses > 0 ? `${((total / totalExpenses) * 100).toFixed(1)}% del total` : '0% del total'}
                         </p>
                       </div>
-                      <div className={`${colors[index]} p-2 rounded-lg mt-4 sm:mt-0`}>
-                        <User className="h-4 w-4 sm:h-5 sm:w-5 lg:h-8 lg:w-8 text-blue-600" />
+                      <div className={`${colors[index]} p-2 rounded-lg`}>
+                        <span className="text-blue-600 text-base sm:text-lg lg:text-xl">{icons[index]}</span>
                       </div>
                     </div>
                   </div>
@@ -231,6 +225,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
               const realName = member.user?.name?.toLowerCase() || firstName.toLowerCase()
               const total = userTotals[firstName] || 0
               const colors = ['bg-green-100']
+              const icons = ['👤']
               
               return (
                 <div 
@@ -249,8 +244,8 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                           {totalExpenses > 0 ? `${((total / totalExpenses) * 100).toFixed(1)}% del total` : '0% del total'}
                         </p>
                       </div>
-                      <div className={`${colors[index]} p-2 rounded-lg mt-4 sm:mt-0`}>
-                        <User className="h-4 w-4 sm:h-5 sm:w-5 lg:h-8 lg:w-8 text-green-600" />
+                      <div className={`${colors[index]} p-2 rounded-lg`}>
+                        <span className="text-green-600 text-base sm:text-lg lg:text-xl">{icons[index]}</span>
                       </div>
                     </div>
                   </div>
@@ -275,8 +270,8 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                         {totalExpenses > 0 ? `${((personTotals.auto / totalExpenses) * 100).toFixed(1)}% del total` : '0% del total'}
                       </p>
                     </div>
-                    <div className="bg-red-100 p-2 rounded-lg mt-2 sm:mt-0">
-                      <Car className="h-4 w-4 sm:h-5 sm:w-5 lg:h-8 lg:w-8 text-red-600" />
+                    <div className="bg-red-100 p-2 rounded-lg">
+                      <span className="text-red-600 text-base sm:text-lg lg:text-xl">🚗</span>
                     </div>
                   </div>
                 </div>
@@ -302,8 +297,8 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                         {totalExpenses > 0 ? `${(((userTotals[householdMembers[2].user?.name?.split(' ')[0]] || 0) / totalExpenses) * 100).toFixed(1)}% del total` : '0% del total'}
                       </p>
                     </div>
-                    <div className="bg-purple-100 p-2 rounded-lg mt-2 sm:mt-0">
-                      <User className="h-4 w-4 sm:h-5 sm:w-5 lg:h-8 lg:w-8 text-purple-600" />
+                    <div className="bg-purple-100 p-2 rounded-lg">
+                      <span className="text-purple-600 text-base sm:text-lg lg:text-xl">👤</span>
                     </div>
                   </div>
                 </div>

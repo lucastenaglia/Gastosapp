@@ -25,14 +25,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
   const getCategoryName = (categoryValue) => {
     if (categories.length > 0) {
       const category = categories.find(cat => cat.value === categoryValue)
-      const categoryName = category ? category.label : categoryValue
-      
-      // Abreviar si tiene más de 10 caracteres, poniendo punto en el carácter 10
-      if (categoryName.length > 10) {
-        return categoryName.substring(0, 10) + '.'
-      }
-      
-      return categoryName
+      return category ? category.label : categoryValue
     }
     return categoryValue
   }
@@ -172,14 +165,14 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
             <p className="text-sm font-medium text-gray-600">Categoría Principal</p>
             <div className="flex items-end sm:items-center justify-between">
               <div className="flex-1">
-                <p className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900">
+                <p className="text-lg sm:text-xl font-bold text-gray-900">
                   {topCategory ? getCategoryName(topCategory[0]) : 'N/A'}
                 </p>
                 <p className="text-sm text-gray-600">
                   {topCategory ? formatCurrency(topCategory[1]) : ''}
                 </p>
               </div>
-              <div className="bg-orange-100 p-2 rounded-lg mt-4 sm:mt-0">
+              <div className="bg-orange-100 p-2 rounded-lg">
                 <PieChart className="h-4 w-4 sm:h-5 sm:w-5 lg:h-8 lg:w-8 text-orange-600" />
               </div>
             </div>
@@ -249,7 +242,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                           {totalExpenses > 0 ? `${((total / totalExpenses) * 100).toFixed(1)}% del total` : '0% del total'}
                         </p>
                       </div>
-                      <div className={`${colors[index]} p-2 rounded-lg mt-4 sm:mt-0`}>
+                      <div className={`${colors[index]} p-2 rounded-lg mt2 sm:mt-0`}>
                         <User className="h-4 w-4 sm:h-5 sm:w-5 lg:h-8 lg:w-8 text-green-600" />
                       </div>
                     </div>
