@@ -184,7 +184,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
       {!isPersonal && (
         <>
           {/* Fila única con todos los elementos - 2 usuarios + Auto */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {/* Primer usuario */}
             {householdMembers.slice(0, 1).map((member, index) => {
               const firstName = member.user?.name?.split(' ')[0] || 'Usuario'
@@ -256,7 +256,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
             {/* Ticker de Auto (si existe) */}
             {(personTotals.auto && personTotals.auto > 0) && (
               <div 
-                className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer col-span-2 lg:col-span-1"
+                className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer sm:col-span-2 lg:col-span-1"
                 onClick={() => onFilterPerson && onFilterPerson('auto')}
               >
                 <div className="space-y-2">
@@ -281,7 +281,7 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
             {/* Tercer usuario (si existe) */}
             {householdMembers.length > 2 && (
               <div 
-                className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer col-span-2 lg:col-span-1"
+                className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer sm:col-span-2 lg:col-span-1"
                 onClick={() => onFilterPerson && onFilterPerson(householdMembers[2].user?.name?.toLowerCase() || 'usuario3')}
               >
                 <div className="space-y-2">

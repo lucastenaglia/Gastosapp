@@ -503,7 +503,7 @@ function App() {
                 onClick={() => setIsFormOpen(true)}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
               >
-                <Plus className="h-6 w-6 font-bold" />
+                <Plus className="h-5 w-5" />
                 <span className="hidden sm:inline">Gasto</span>
               </button>
               <button

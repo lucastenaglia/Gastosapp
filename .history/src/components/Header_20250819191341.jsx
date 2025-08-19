@@ -1,4 +1,4 @@
-import { Plus, DollarSign, Home, Settings, LogOut, ArrowLeft, MoreVertical, User } from 'lucide-react'
+import { Plus, DollarSign, Home, Settings, LogOut, ArrowLeft, MoreVertical } from 'lucide-react'
 import { useState } from 'react'
 
 const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onLeaveHousehold, onReturnToHousehold, onLeaveHouseholdPermanently }) => {
@@ -47,6 +47,9 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
                   {household ? <Settings className="h-4 w-4" /> : <Home className="h-4 w-4" />}
                   <span className="text-sm hidden sm:inline">
                     {household ? "Configurar" : "Configurar"}
+                  </span>
+                  <span className="sm:hidden">
+                    {household ? "Config" : "Config"}
                   </span>
                 </button>
                 
@@ -108,8 +111,9 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
                 className="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
                 title="Cambiar a vista personal"
               >
-                <User className="h-4 w-4" />
+                <LogOut className="h-4 w-4" />
                 <span className="text-sm hidden sm:inline">Personal</span>
+                <span className="sm:hidden">Personal</span>
               </button>
             )}
             

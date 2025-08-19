@@ -183,15 +183,14 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
       {/* Segunda fila - Estadísticas por persona (solo en modo hogar) */}
       {!isPersonal && (
         <>
-          {/* Fila única con todos los elementos - 2 usuarios + Auto */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {/* Primer usuario */}
-            {householdMembers.slice(0, 1).map((member, index) => {
+          {/* Primera fila - Usuarios del hogar (siempre 2 en la misma línea) */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            {householdMembers.slice(0, 2).map((member, index) => {
               const firstName = member.user?.name?.split(' ')[0] || 'Usuario'
               const realName = member.user?.name?.toLowerCase() || firstName.toLowerCase()
               const total = userTotals[firstName] || 0
-              const colors = ['bg-blue-100']
-              const icons = ['👤']
+              const colors = ['bg-blue-100', 'bg-green-100']
+              const icons = ['👤', '👤']
               
               return (
                 <div 
@@ -218,45 +217,14 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                 </div>
               )
             })}
+          </div>
 
-            {/* Segundo usuario */}
-            {householdMembers.slice(1, 2).map((member, index) => {
-              const firstName = member.user?.name?.split(' ')[0] || 'Usuario'
-              const realName = member.user?.name?.toLowerCase() || firstName.toLowerCase()
-              const total = userTotals[firstName] || 0
-              const colors = ['bg-green-100']
-              const icons = ['👤']
-              
-              return (
-                <div 
-                  key={member.user_id} 
-                  className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer"
-                  onClick={() => onFilterPerson && onFilterPerson(realName)}
-                >
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-gray-600">{firstName}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <p className="text-lg sm:text-xl font-bold text-gray-900">
-                          {formatCurrency(total)}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          {totalExpenses > 0 ? `${((total / totalExpenses) * 100).toFixed(1)}% del total` : '0% del total'}
-                        </p>
-                      </div>
-                      <div className={`${colors[index]} p-2 rounded-lg`}>
-                        <span className="text-green-600 text-lg sm:text-xl lg:text-2xl">{icons[index]}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-
-            {/* Ticker de Auto (si existe) */}
-            {(personTotals.auto && personTotals.auto > 0) && (
+          {/* Segunda fila - Auto y/o tercer usuario */}
+          {(personTotals.auto && personTotals.auto > 0) && (
+            <div className="grid gap-3 sm:gap-4 lg:grid-cols-3">
+              {/* Ticker de Auto */}
               <div 
-                className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer col-span-2 lg:col-span-1"
+                className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer"
                 onClick={() => onFilterPerson && onFilterPerson('auto')}
               >
                 <div className="space-y-2">
@@ -276,12 +244,41 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                   </div>
                 </div>
               </div>
-            )}
 
-            {/* Tercer usuario (si existe) */}
-            {householdMembers.length > 2 && (
+              {/* Tercer usuario (si existe) */}
+              {householdMembers.length > 2 && (
+                <div 
+                  className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer"
+                  onClick={() => onFilterPerson && onFilterPerson(householdMembers[2].user?.name?.toLowerCase() || 'usuario3')}
+                >
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-gray-600">
+                      {householdMembers[2].user?.name?.split(' ')[0] || 'Usuario3'}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-lg sm:text-xl font-bold text-gray-900">
+                          {formatCurrency(userTotals[householdMembers[2].user?.name?.split(' ')[0]] || 0)}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          {totalExpenses > 0 ? `${(((userTotals[householdMembers[2].user?.name?.split(' ')[0]] || 0) / totalExpenses) * 100).toFixed(1)}% del total` : '0% del total'}
+                        </p>
+                      </div>
+                      <div className="bg-purple-100 p-2 rounded-lg">
+                        <span className="text-purple-600 text-lg sm:text-xl lg:text-2xl">👤</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Si no hay Auto pero hay tercer usuario, ocupa toda la línea */}
+          {(!personTotals.auto || personTotals.auto === 0) && householdMembers.length > 2 && (
+            <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
               <div 
-                className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer col-span-2 lg:col-span-1"
+                className="bg-white p-3 sm:p-4 rounded-lg shadow border hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer"
                 onClick={() => onFilterPerson && onFilterPerson(householdMembers[2].user?.name?.toLowerCase() || 'usuario3')}
               >
                 <div className="space-y-2">
@@ -298,13 +295,13 @@ const ExpenseSummary = ({ expenses, isPersonal = false, householdMembers = [], o
                       </p>
                     </div>
                     <div className="bg-purple-100 p-2 rounded-lg">
-                      <span className="text-purple-600 text-lg sm:text-xl lg:text-2xl">👤</span>
-                    </div>
+                        <span className="text-purple-600 text-lg sm:text-xl lg:text-2xl">👤</span>
+                      </div>
                   </div>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </>
       )}
     </div>
