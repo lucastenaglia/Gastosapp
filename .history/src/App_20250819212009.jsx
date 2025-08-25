@@ -500,17 +500,7 @@ function App() {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-800">
-              Gastos
-              {household && (
-                <div className="text-2xl font-bold text-gray-800">
-                  Hogar
-                </div>
-              )}
-              {!household && (
-                <div className="text-2xl font-bold text-gray-800">
-                  Personales
-                </div>
-              )}
+              {household ? 'Gastos Hogar' : 'Gastos Personales'}
               {filteredPerson && (
                 <span className="text-lg font-normal text-blue-600 ml-2">
                   (Filtrado: {filteredPerson === 'auto' ? 'Auto' : filteredPerson})

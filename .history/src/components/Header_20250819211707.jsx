@@ -31,7 +31,7 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Gastos App</h1>
               <p className="text-gray-600">
-                Controla tus gastos cotidianos
+                {!household ? 'Controla tus gastos cotidianos' : ''}
               </p>
             </div>
           </div>
@@ -44,7 +44,7 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
                   title={household ? "Configuraciones del hogar" : "Configurar hogar"}
                 >
-                  {household ? <Settings className="h-4 w-4" /> : <Settings className="h-4 w-4" />}
+                  {household ? <Settings className="h-4 w-4" /> : <Home className="h-4 w-4" />}
                   <span className="text-sm hidden sm:inline">
                     {household ? "Configurar" : "Configurar"}
                   </span>

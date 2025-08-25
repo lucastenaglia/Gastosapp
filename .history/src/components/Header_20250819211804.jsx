@@ -31,7 +31,7 @@ const Header = ({ onAddExpense, onLogout, user, household, onSetupHousehold, onL
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Gastos App</h1>
               <p className="text-gray-600">
-                Controla tus gastos cotidianos
+                {!household ? 'Controla tus gastos cotidianos' : ''}
               </p>
             </div>
           </div>

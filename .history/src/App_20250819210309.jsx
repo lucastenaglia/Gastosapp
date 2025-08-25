@@ -476,8 +476,8 @@ function App() {
 
   // Función para abrir Cafesito App
   const handleCafesitoClick = () => {
-    // Enlace de Cafesito App para Gastos App
-    const cafesitoUrl = 'https://cafecito.app/gastosapp'
+    // Aquí puedes poner tu enlace de Cafesito App
+    const cafesitoUrl = 'https://cafecito.app/tu-usuario' // Cambia por tu usuario real
     window.open(cafesitoUrl, '_blank')
   }
 
@@ -500,17 +500,7 @@ function App() {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-800">
-              Gastos
-              {household && (
-                <div className="text-2xl font-bold text-gray-800">
-                  Hogar
-                </div>
-              )}
-              {!household && (
-                <div className="text-2xl font-bold text-gray-800">
-                  Personales
-                </div>
-              )}
+              {household ? 'Hogar' : 'Gastos Personales'}
               {filteredPerson && (
                 <span className="text-lg font-normal text-blue-600 ml-2">
                   (Filtrado: {filteredPerson === 'auto' ? 'Auto' : filteredPerson})
@@ -523,13 +513,6 @@ function App() {
               )}
             </h2>
             <div className="flex items-center space-x-2">
-              <button
-                onClick={handleCafesitoClick}
-                className="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white p-2 rounded-lg transition-all duration-200 hover:scale-105"
-                title="¡Apoya el proyecto! - Cafesito App"
-              >
-                <Coffee className="h-6 w-6" />
-              </button>
               <button
                 onClick={() => setIsFormOpen(true)}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"

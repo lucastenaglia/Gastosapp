@@ -281,14 +281,12 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onShare, currentUser, loading
                         {expense.description}
                       </h3>
                       <div className="flex items-center space-x-2 text-sm text-gray-600 mt-1">
-                        <span className="hidden sm:flex items-center space-x-1">
+                        <span className="flex items-center space-x-1">
                           <Calendar className="h-3 w-3" />
-                          <span>{formatDate(expense.date)}</span>
+                          <span className="hidden sm:inline">{formatDate(expense.date)}</span>
                         </span>
                         <span className="hidden sm:inline">•</span>
-                        <span className="capitalize text-xs sm:text-sm -ml-4 sm:ml-0">
-                          <span className="sm:hidden">• </span>{expense.category}
-                        </span>
+                        <span className="capitalize text-xs sm:text-sm">{expense.category}</span>
                         <span className="hidden sm:inline">•</span>
                         <span className="hidden sm:flex items-center space-x-1 text-gray-600">
                           <span>{getPersonEmoji(expense.person)}</span>

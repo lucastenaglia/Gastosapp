@@ -502,12 +502,12 @@ function App() {
             <h2 className="text-2xl font-bold text-gray-800">
               Gastos
               {household && (
-                <div className="text-2xl font-bold text-gray-800">
+                <div className="text-lg font-normal text-blue-600">
                   Hogar
                 </div>
               )}
               {!household && (
-                <div className="text-2xl font-bold text-gray-800">
+                <div className="text-lg font-normal text-gray-600">
                   Personales
                 </div>
               )}
